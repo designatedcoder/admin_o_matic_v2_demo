@@ -1,11 +1,21 @@
 <?php
 
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\PermissionController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/admin/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
+
+Route::get('/admin/permissions', [PermissionController::class, 'index'])->name('admin.permissions.index');
+
+
+
+
+
+
+
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
