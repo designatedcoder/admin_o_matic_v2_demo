@@ -9,6 +9,7 @@ use Inertia\Inertia;
 Route::get('/admin/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
 
 Route::get('/admin/permissions', [PermissionController::class, 'index'])->name('admin.permissions.index');
+Route::post('/admin/permissions', [PermissionController::class, 'store'])->name('admin.permissions.store');
 
 
 

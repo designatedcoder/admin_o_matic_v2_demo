@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Permission;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Illuminate\Support\Str;
 
 class PermissionController extends Controller
 {
@@ -29,9 +30,14 @@ class PermissionController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
-        //
+    public function store(Request $request) {
+        Permission::create([
+            'name' => Str::lower(Str::slug($request->display_name)),
+            'display_name' => $request->display_name,
+            'description' => $request->description,
+        ]);
+
+        return to_route('admin.permissions.index');
     }
 
     /**
