@@ -15,7 +15,7 @@ class PermissionController extends Controller
      */
     public function index() {
         return Inertia::render('Admin/Permissions/Index', [
-            'permissions' => Permission::all()
+            'permissions' => Permission::latest()->get()
         ])->rootView('admin');
     }
 
@@ -59,16 +59,21 @@ class PermissionController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
-    {
-        //
+    public function update(Request $request, Permission $permission) {
+       $permission->update([
+            'name' => Str::lower(Str::slug($request->display_name)),
+            'display_name' => $request->display_name,
+            'description' => $request->description,
+        ]);
+
+        return to_route('admin.permissions.index');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
-    {
-        //
+    public function destroy(Permission $permission) {
+        $permission->delete();
+        return to_route('admin.permissions.index');
     }
 }

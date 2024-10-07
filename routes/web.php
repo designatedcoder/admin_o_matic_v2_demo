@@ -10,6 +10,8 @@ Route::get('/admin/dashboard', [DashboardController::class, 'index'])->name('adm
 
 Route::get('/admin/permissions', [PermissionController::class, 'index'])->name('admin.permissions.index');
 Route::post('/admin/permissions', [PermissionController::class, 'store'])->name('admin.permissions.store');
+Route::patch('/admin/permissions/{permission}', [PermissionController::class, 'update'])->name('admin.permissions.update');
+Route::delete('/admin/permissions/{permission}', [PermissionController::class, 'destroy'])->name('admin.permissions.destroy');
 
 
 

@@ -1,16 +1,53 @@
 <script setup>
+    import { ref, computed } from 'vue'
     import { useForm } from '@inertiajs/vue3'
     import AdminLayout from '@/Layouts/AdminLayout.vue'
 
-    defineProps({
+    const props = defineProps({
         permissions: Array
     });
 
     const form = useForm({
+        id: '',
         name: '',
         display_name: '',
         description: ''
     })
+
+    const editedIndex = ref(-1)
+    const editMode = ref(false)
+
+    const formTitle = computed(() => {
+       return editedIndex.value === -1 ? 'Create New Permission' : 'Edit Current Permission'
+    });
+
+    const btnTxt = computed(() => {
+       return editedIndex.value === -1 ? 'Create' : 'Update'
+    });
+
+    const checkMode = computed(() => {
+       return editMode.value === false ? createPermission : editPermission
+    });
+
+    const openModal = () => {
+        $('#modal-lg').modal('show')
+    };
+
+    const closeModal = () => {
+        $('#modal-lg').modal('hide')
+        editedIndex.value = false
+        editMode.value = -1
+        form.reset()
+    };
+
+    const openEdit = (item) => {
+        $('#modal-lg').modal('show')
+        editedIndex.value = props.permissions.indexOf(item);
+        editMode.value = true
+        form.id = item.id
+        form.display_name = item.display_name
+        form.description = item.description
+    };
 
     const nameSlug = () => {
         return slugify(form.display_name.toLowerCase())
@@ -31,10 +68,29 @@
         form.post(route('admin.permissions.store'), {
             preserveScroll: true,
             onSuccess: () => {
-               $('#modal-lg').modal('hide')
+                closeModal()
             }
         })
     }
+
+    const editPermission = () => {
+        form.patch(route('admin.permissions.update', form.id), {
+            preserveScroll: true,
+            onSuccess: () => {
+                closeModal()
+            }
+        })
+    }
+
+    const deletePermission = (item) => {
+        form.delete(route('admin.permissions.destroy', item.id), {
+            preserveScroll: true,
+            onSuccess: () => {
+                alert('deleted')
+            }
+        })
+    }
+
 </script>
 
 <template>
@@ -53,10 +109,11 @@
                             <h3 class="card-title">Permissions Table</h3>
 
                             <div class="card-tools">
-                                <button type="btn"
+                                <button type="button"
                                     class="btn btn-primary"
                                     data-toggle="modal"
                                     data-target="#modal-lg"
+                                    @click.prevent="openModal"
                                 >
                                     Create
                                 </button>
@@ -76,15 +133,15 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr v-for="(item, index) in permissions" :key="index">
+                                    <tr v-for="(item, index) in props.permissions" :key="index">
                                         <td>{{ item.id }}</td>
                                         <td>{{ item.name }}</td>
                                         <td class="text-capitalize">{{ item.display_name }}</td>
                                         <td>{{ item.description }}</td>
                                         <td>{{ item.created_at }}</td>
                                         <td class="text-right">
-                                            <button type="button" class="btn btn-success">Edit</button>
-                                            <button type="button" class="btn btn-danger ml-2">Delete</button>
+                                            <button type="button" class="btn btn-success" @click.prevent="openEdit(item)">Edit</button>
+                                            <button type="button" class="btn btn-danger ml-2" @click.prevent="deletePermission(item)">Delete</button>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -97,16 +154,16 @@
             </div>
 
             <div class="modal fade" id="modal-lg">
-                <div class="modal-dialog modal-lg">
+                <div class="modal-dialog modal-lg modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h4 class="modal-title">Create a Permission</h4>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <h4 class="modal-title">{{ formTitle }}</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close" @click.prevent="closeModal">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
 
-                        <form @submit.prevent="createPermission">
+                        <form @submit.prevent="checkMode">
                             <div class="modal-body">
                                 <div class="card card-primary">
                                     <div class="form-group">
@@ -124,9 +181,9 @@
                                 </div>
                             </div>
                             <div class="modal-footer justify-content-between">
-                                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                                <button type="button" class="btn btn-danger" data-dismiss="modal" @click.prevent="closeModal">Cancel</button>
                                 <button type="submit" class="btn btn-primary">
-                                   Create
+                                    {{ btnTxt }}
                                 </button>
                             </div>
                         </form>
