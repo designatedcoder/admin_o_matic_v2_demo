@@ -31,6 +31,11 @@ class PermissionController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request) {
+        $request->validate([
+            'display_name' => ['required', 'max:25', 'unique:permissions,display_name'],
+            'description' => ['required', 'max:255']
+        ]);
+
         Permission::create([
             'name' => Str::lower(Str::slug($request->display_name)),
             'display_name' => $request->display_name,
@@ -60,6 +65,11 @@ class PermissionController extends Controller
      * Update the specified resource in storage.
      */
     public function update(Request $request, Permission $permission) {
+        $request->validate([
+            'display_name' => ['required', 'max:25'],
+            'description' => ['required', 'max:255']
+        ]);
+
        $permission->update([
             'name' => Str::lower(Str::slug($request->display_name)),
             'display_name' => $request->display_name,

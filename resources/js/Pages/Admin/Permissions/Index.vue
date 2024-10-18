@@ -35,9 +35,10 @@
 
     const closeModal = () => {
         $('#modal-lg').modal('hide')
-        editedIndex.value = false
-        editMode.value = -1
+        editedIndex.value = -1
+        editMode.value = false
         form.reset()
+        form.clearErrors()
     };
 
     const openEdit = (item) => {
@@ -69,6 +70,10 @@
             preserveScroll: true,
             onSuccess: () => {
                 closeModal()
+                Toast.fire({
+                    icon: "success",
+                    title: "New permission created!"
+                })
             }
         })
     }
@@ -78,16 +83,36 @@
             preserveScroll: true,
             onSuccess: () => {
                 closeModal()
+                Toast.fire({
+                    icon: "success",
+                    title: "Permission has been updated!"
+                })
             }
         })
     }
 
     const deletePermission = (item) => {
-        form.delete(route('admin.permissions.destroy', item.id), {
-            preserveScroll: true,
-            onSuccess: () => {
-                alert('deleted')
-            }
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                form.delete(route('admin.permissions.destroy', item.id), {
+                    preserveScroll: true,
+                    onSuccess: ()=> {
+                        Swal.fire(
+                            'Deleted!',
+                            'Permission has been deleted.',
+                            'success'
+                        )
+                     }
+                 })
+             }
         })
     }
 
@@ -167,16 +192,22 @@
                             <div class="modal-body">
                                 <div class="card card-primary">
                                     <div class="form-group">
-                                        <label for="display_name" class="col-form-label">Display Name</label>
-                                        <input type="text" class="form-control" style="border-radius: .25rem;" v-model="form.display_name">
+                                        <label for="display_name" class="col-form-label" :class="{ 'text-danger' : form.errors.display_name }">Display Name</label>
+                                        <input type="text" class="form-control" :class="{ 'is-invalid' : form.errors.display_name }" style="border-radius: .25rem;" v-model="form.display_name">
+                                        <div class="invalid-feedback mt-2" :class="{ 'd-block' : form.errors.display_name }">
+                                            {{ form.errors.display_name }}
+                                        </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="name" class="col-form-label">Name (Slug)</label>
                                         <input type="text" class="form-control" style="border-radius: .25rem;" disabled :value="nameSlug(form.display_name)">
                                     </div>
                                     <div class="form-group">
-                                        <label for="description" class="col-form-label">Description</label>
-                                        <textarea rows="2" class="form-control" style="border-radius: .25rem;" v-model="form.description"></textarea>
+                                        <label for="description" class="col-form-label" :class="{ 'text-danger' : form.errors.description }">Description</label>
+                                        <textarea rows="2" class="form-control" :class="{ 'is-invalid' : form.errors.description }" style="border-radius: .25rem;" v-model="form.description"></textarea>
+                                        <div class="invalid-feedback mt-2" :class="{ 'd-block' : form.errors.description }">
+                                            {{ form.errors.description }}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -197,3 +228,14 @@
         </template>
     </AdminLayout>
 </template>
+
+<style>
+    body.swal2-toast-shown .swal2-container.swal2-top-end, body.swal2-toast-shown .swal2-container.swal2-top-right {
+        top: 60px;
+        right: 60px;
+    }
+
+    .dark-mode .swal2-popup .swal2-content, .dark-mode .swal2-popup .swal2-title {
+        color: #001f3f;
+    }
+</style>
