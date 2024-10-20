@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\PermissionController;
+use App\Http\Controllers\Admin\RoleController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -13,7 +14,10 @@ Route::post('/admin/permissions', [PermissionController::class, 'store'])->name(
 Route::patch('/admin/permissions/{permission}', [PermissionController::class, 'update'])->name('admin.permissions.update');
 Route::delete('/admin/permissions/{permission}', [PermissionController::class, 'destroy'])->name('admin.permissions.destroy');
 
-
+Route::get('/admin/roles', [RoleController::class, 'index'])->name('admin.roles.index');
+Route::post('/admin/roles', [RoleController::class, 'store'])->name('admin.roles.store');
+Route::patch('/admin/roles/{role}', [RoleController::class, 'update'])->name('admin.roles.update');
+Route::delete('/admin/roles/{role}', [RoleController::class, 'destroy'])->name('admin.roles.destroy');
 
 
 

@@ -45,6 +45,12 @@ with font-awesome or any other icon font library -->
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
+                                <Link :href="route('admin.roles.index')" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Roles</p>
+                                </Link>
+                            </li>
+                            <li class="nav-item">
                                 <Link :href="route('admin.permissions.index')" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Permissions</p>
