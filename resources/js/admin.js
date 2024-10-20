@@ -6,6 +6,9 @@ import { createInertiaApp } from '@inertiajs/vue3';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy';
 
+import VueMultiselect from 'vue-multiselect'
+import 'vue-multiselect/dist/vue-multiselect.min.css'
+
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
 window.Toast = Swal.mixin({
@@ -27,6 +30,7 @@ createInertiaApp({
         return createApp({ render: () => h(App, props) })
             .use(plugin)
             .use(ZiggyVue)
+            .component('VueMultiselect', VueMultiselect)
             .mount(el);
     },
     progress: {
