@@ -10,7 +10,7 @@
 </script>
 
 <template>
-    <div class="wrapper">
+    <div class="dark-mode wrapper">
 
         <Head :title="title" />
 

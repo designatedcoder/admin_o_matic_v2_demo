@@ -228,14 +228,3 @@
         </template>
     </AdminLayout>
 </template>
-
-<style>
-    body.swal2-toast-shown .swal2-container.swal2-top-end, body.swal2-toast-shown .swal2-container.swal2-top-right {
-        top: 60px;
-        right: 60px;
-    }
-
-    .dark-mode .swal2-popup .swal2-content, .dark-mode .swal2-popup .swal2-title {
-        color: #001f3f;
-    }
-</style>
