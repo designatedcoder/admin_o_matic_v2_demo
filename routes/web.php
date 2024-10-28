@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\RoleController;
 use Illuminate\Foundation\Application;
@@ -19,7 +20,8 @@ Route::post('/admin/roles', [RoleController::class, 'store'])->name('admin.roles
 Route::patch('/admin/roles/{role}', [RoleController::class, 'update'])->name('admin.roles.update');
 Route::delete('/admin/roles/{role}', [RoleController::class, 'destroy'])->name('admin.roles.destroy');
 
-
+Route::get('/admin/users', [UserController::class, 'index'])->name('admin.users.index');
+Route::patch('/admin/users/{user}', [UserController::class, 'update'])->name('admin.users.update');
 
 
 
