@@ -18,39 +18,6 @@ class UserController extends Controller
             'users' => User::where('is_admin', 0)->with('roles:id,name')->latest()->get(),
             'roles' => Role::get(['id', 'name'])
         ])->rootView('admin');
-
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(User $user)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(User $user)
-    {
-        //
     }
 
     /**
@@ -79,13 +46,5 @@ class UserController extends Controller
             $user->update(['is_admin' => 1]);
         }
         return to_route('admin.users.index');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(User $user)
-    {
-        //
     }
 }

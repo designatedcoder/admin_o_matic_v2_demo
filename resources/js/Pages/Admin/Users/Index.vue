@@ -24,6 +24,7 @@
         editedIndex.value = -1
         editMode.value = false
         form.reset()
+        form.clearErrors()
     };
 
     const openEdit = (item) => {
@@ -118,11 +119,11 @@
                                 <div class="card card-primary">
                                     <div class="form-group">
                                         <label for="display_name" class="col-form-label">Name</label>
-                                        <input type="text" class="form-control"style="border-radius: .25rem;" disabled v-model="form.name">
+                                        <input type="text" class="form-control" style="border-radius: .25rem;" disabled v-model="form.name">
                                     </div>
                                     <div class="form-group">
                                         <label for="display_name" class="col-form-label">Email</label>
-                                        <input type="email" class="form-control"style="border-radius: .25rem;" disabled v-model="form.email">
+                                        <input type="email" class="form-control" style="border-radius: .25rem;" disabled v-model="form.email">
                                     </div>
 
                                     <div class="form-group">
