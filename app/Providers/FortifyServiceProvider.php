@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
+use Laravel\Fortify\Contracts\LoginResponse;
 use Laravel\Fortify\Fortify;
 
 class FortifyServiceProvider extends ServiceProvider
@@ -18,9 +19,25 @@ class FortifyServiceProvider extends ServiceProvider
     /**
      * Register any application services.
      */
-    public function register(): void
-    {
-        //
+    public function register(): void {
+        $this->app->instance(LoginResponse::class, new class implements LoginResponse {
+            public function toResponse($request) {
+                $admin = auth()->user()->is_admin;
+
+                switch ($admin) {
+                    case '0':
+                        return redirect()->intended(config('fortify.home'));
+                        break;
+
+                    case '1':
+                        return redirect()->route('admin.dashboard');
+                        break;
+
+                    default:
+                        return redirect()->route('welcome');
+                }
+            }
+        });
     }
 
     /**
