@@ -9,8 +9,11 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-
-Route::prefix('admin')->name('admin.')->group(function() {
+Route::prefix('admin')->name('admin.')->middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified',
+])->group(function() {
     Route::get('/dashboard', DashboardController::class)->name('dashboard');
 
     Route::resource('/permissions', PermissionController::class)

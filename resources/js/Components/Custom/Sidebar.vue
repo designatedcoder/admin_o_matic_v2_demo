@@ -1,23 +1,27 @@
 <script setup>
-    import { Link } from '@inertiajs/vue3'
+    import { Link, router } from '@inertiajs/vue3'
+
+    const logout = () => {
+        router.post(route('logout'));
+    };
 </script>
 <template>
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
         <!-- Brand Logo -->
-        <a href="#" class="brand-link">
+        <Link :href="route('dashboard')" class="brand-link">
             <img :src="'/storage/defaults/images/AdminLTELogo.png'" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
             <span class="brand-text font-weight-light">Admin-o-Matic</span>
-        </a>
+        </Link>
 
         <!-- Sidebar -->
         <div class="sidebar">
             <!-- Sidebar user panel (optional) -->
             <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                 <div class="image">
-                    <img :src="'/storage/defaults/images/user2-160x160.jpg'" class="img-circle elevation-2" alt="User Image">
+                    <img :src="$page.props.auth.user.profile_photo_url" class="img-circle elevation-2" alt="User Image">
                 </div>
                 <div class="info">
-                    <a href="#" class="d-block">Alexander Pierce</a>
+                    <a href="#" class="d-block">{{ $page.props.auth.user.name }}</a>
                 </div>
             </div>
 
@@ -72,6 +76,21 @@ with font-awesome or any other icon font library -->
                     </li>
 
                     <li class="nav-header">MISCELLANEOUS</li>
+
+                    <li class="nav-item">
+                        <Link :href="route('dashboard')" class="nav-link">
+                        <i class="fas fa-home nav-icon"></i>
+                        <p>User Dashboard</p>
+                        </Link>
+                    </li>
+                    <li class="nav-item">
+                        <form @submit.prevent="logout">
+                            <button type="submit" class="nav-link text-left">
+                                <i class="fas fa-sign-out-alt nav-icon"></i>
+                                <p>Logout</p>
+                            </button>
+                        </form>
+                    </li>
                 </ul>
             </nav>
             <!-- /.sidebar-menu -->
