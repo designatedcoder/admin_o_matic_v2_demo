@@ -13,18 +13,32 @@ return [
 
     'roles_structure' => [
         'super-admin' => [
-            'users' => 'c,r,u,d',
+            'panel' => 'a',
+            'admins' => 'a,c,u,d',
+            'roles' => 'a,c,u,d',
+            'permissions' => 'a,c,u,d',
+            'users' => 'a,u',
             'profile' => 'r,u',
         ],
         'admin' => [
-            'users' => 'c,r,u,d',
+            'panel' => 'a',
+            'admins' => 'a,c,u,d',
+            'roles' => 'a,c,u,d',
+            'permissions' => 'a,c,u,d',
+            'users' => 'a,u',
             'profile' => 'r,u',
         ],
         'moderator' => [
-            'users' => 'r',
+            'panel' => 'a',
+            'admins' => 'a',
+            'roles' => 'a',
+            'permissions' => 'a',
+            'users' => 'a',
             'profile' => 'r,u',
         ],
         'developer' => [
+            'panel' => 'a',
+            'admins' => 'a',
             'profile' => 'r,u',
         ],
         'user' => [
@@ -40,5 +54,6 @@ return [
         'r' => 'read',
         'u' => 'update',
         'd' => 'delete',
+        'a' => 'access',
     ],
 ];

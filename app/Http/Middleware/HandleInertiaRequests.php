@@ -36,7 +36,27 @@ class HandleInertiaRequests extends Middleware
     public function share(Request $request): array
     {
         return array_merge(parent::share($request), [
-            //
+            'adminUser' => function() {
+                $adminUser = auth()->user();
+
+                return $adminUser ? [
+                    'can' => [
+                        'accessPanel' => $adminUser->isAbleTo(['access-panel']),
+                        'accessAdmins' => $adminUser->isAbleTo(['access-admins']),
+                        'updateAdmins' => $adminUser->isAbleTo(['update-admins']),
+                        'accessRoles' => $adminUser->isAbleTo(['access-roles']),
+                        'createRoles' => $adminUser->isAbleTo(['create-roles']),
+                        'updateRoles' => $adminUser->isAbleTo(['update-roles']),
+                        'deleteRoles' => $adminUser->isAbleTo(['delete-roles']),
+                        'accessPermissions' => $adminUser->isAbleTo(['access-permissions']),
+                        'createPermissions' => $adminUser->isAbleTo(['create-permissions']),
+                        'updatePermissions' => $adminUser->isAbleTo(['update-permissions']),
+                        'deletePermissions' => $adminUser->isAbleTo(['delete-permissions']),
+                        'accessUsers' => $adminUser->isAbleTo(['access-users']),
+                        'updateUsers' => $adminUser->isAbleTo(['update-users']),
+                    ],
+                ] : null;
+            }
         ]);
     }
 }
