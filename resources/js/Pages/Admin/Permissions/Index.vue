@@ -133,7 +133,9 @@
                         <div class="card-header">
                             <h3 class="card-title">Permissions Table</h3>
 
-                            <div class="card-tools">
+                            <div class="card-tools"
+                                v-if="$page.props.adminUser.can.createPermissions"
+                            >
                                 <button type="button"
                                     class="btn btn-primary"
                                     data-toggle="modal"
@@ -154,7 +156,9 @@
                                         <th>Display Name</th>
                                         <th>Description</th>
                                         <th>Created</th>
-                                        <th class="text-right">Actions</th>
+                                        <th class="text-right"
+                                            v-if="$page.props.adminUser.can.updatePermissions || $page.props.adminUser.can.deletePermissions"
+                                        >Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -165,8 +169,16 @@
                                         <td>{{ item.description }}</td>
                                         <td>{{ item.created_at }}</td>
                                         <td class="text-right">
-                                            <button type="button" class="btn btn-success" @click.prevent="openEdit(item)">Edit</button>
-                                            <button type="button" class="btn btn-danger ml-2" @click.prevent="deletePermission(item)">Delete</button>
+                                            <button type="button"
+                                                class="btn btn-success"
+                                                @click.prevent="openEdit(item)"
+                                                v-if="$page.props.adminUser.can.updatePermissions"
+                                            >Edit</button>
+                                            <button type="button"
+                                                class="btn btn-danger ml-2"
+                                                @click.prevent="deletePermission(item)"
+                                                v-if="$page.props.adminUser.can.deletePermissions"
+                                            >Delete</button>
                                         </td>
                                     </tr>
                                 </tbody>

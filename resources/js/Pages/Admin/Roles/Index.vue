@@ -136,7 +136,9 @@
                         <div class="card-header">
                             <h3 class="card-title">Roles Table</h3>
 
-                            <div class="card-tools">
+                            <div class="card-tools"
+                                v-if="$page.props.adminUser.can.createRoles"
+                            >
                                 <button type="button"
                                     class="btn btn-primary"
                                     data-toggle="modal"
@@ -158,7 +160,9 @@
                                         <th>Description</th>
                                         <th>Permissions</th>
                                         <th>Created</th>
-                                        <th class="text-right">Actions</th>
+                                        <th class="text-right"
+                                            v-if="$page.props.adminUser.can.updateRoles || $page.props.adminUser.can.deleteRoles"
+                                        >Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -176,8 +180,16 @@
                                         </td>
                                         <td>{{ item.created_at }}</td>
                                         <td class="text-right">
-                                            <button type="button" class="btn btn-success" @click.prevent="openEdit(item)">Edit</button>
-                                            <button type="button" class="btn btn-danger ml-2" @click.prevent="deleteRole(item)">Delete</button>
+                                            <button type="button"
+                                                class="btn btn-success"
+                                                @click.prevent="openEdit(item)"
+                                                v-if="$page.props.adminUser.can.updateRoles"
+                                            >Edit</button>
+                                            <button type="button"
+                                                class="btn btn-danger ml-2"
+                                                @click.prevent="deleteRole(item)"
+                                                v-if="$page.props.adminUser.can.deleteRoles"
+                                            >Delete</button>
                                         </td>
                                     </tr>
                                 </tbody>

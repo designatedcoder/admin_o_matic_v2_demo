@@ -75,7 +75,9 @@
                                         <th>E-mail</th>
                                         <th>Roles</th>
                                         <th>Created</th>
-                                        <th class="text-right">Actions</th>
+                                        <th class="text-right"
+                                            v-if="$page.props.adminUser.can.updateAdmins"
+                                        >Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -91,7 +93,9 @@
                                             </div>
                                         </td>
                                         <td>{{ item.created_at }}</td>
-                                        <td class="text-right">
+                                        <td class="text-right"
+                                            v-if="$page.props.adminUser.can.updateAdmins"
+                                        >
                                             <button type="button" class="btn btn-success" @click.prevent="openEdit(item)">Edit</button>
                                         </td>
                                     </tr>

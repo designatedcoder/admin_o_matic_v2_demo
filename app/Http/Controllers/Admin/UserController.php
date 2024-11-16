@@ -14,6 +14,8 @@ class UserController extends Controller
      * Display a listing of the resource.
      */
     public function index() {
+        Gate::allowIf(fn (User $user) => $user->isAbleTo('access-users'));
+
         return Inertia::render('Admin/Users/Index', [
             'users' => User::where('is_admin', 0)->with('roles:id,name')->latest()->get(),
             'roles' => Role::get(['id', 'name'])
@@ -24,6 +26,8 @@ class UserController extends Controller
      * Update the specified resource in storage.
      */
     public function update(Request $request, User $user) {
+        Gate::allowIf(fn (User $user) => $user->isAbleTo('update-users'));
+
         $request->validate([
             'selectedRoles' => ['required']
         ], [

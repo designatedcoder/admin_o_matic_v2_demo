@@ -262,7 +262,7 @@ return [
     | Determines if you can check if a user has a permission using the "can" method.
     |
     */
-    'permissions_as_gates' => false,
+    'permissions_as_gates' => true,
 
     /*
     |--------------------------------------------------------------------------

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
 
 class AdminController extends Controller
@@ -14,6 +15,8 @@ class AdminController extends Controller
      * Display a listing of the resource.
      */
     public function index() {
+        Gate::allowIf(fn (User $user) => $user->isAbleTo('access-admins'));
+
         return Inertia::render('Admin/Admins/Index', [
             'admins' => User::where('is_admin', 1)->with('roles:id,name')->get(),
             'roles' => Role::get(['id', 'name'])
@@ -24,6 +27,8 @@ class AdminController extends Controller
      * Update the specified resource in storage.
      */
     public function update(Request $request, User $user) {
+        Gate::allowIf(fn (User $user) => $user->isAbleTo('update-admins'));
+
         $request->validate([
             'selectedRoles' => ['required']
         ], [

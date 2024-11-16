@@ -48,25 +48,33 @@ with font-awesome or any other icon font library -->
                             </p>
                         </a>
                         <ul class="nav nav-treeview">
-                            <li class="nav-item">
+                            <li class="nav-item"
+                                v-if="$page.props.adminUser.can.accessRoles"
+                            >
                                 <Link :href="route('admin.roles.index')" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Roles</p>
                                 </Link>
                             </li>
-                            <li class="nav-item">
+                            <li class="nav-item"
+                                v-if="$page.props.adminUser.can.accessPermissions"
+                            >
                                 <Link :href="route('admin.permissions.index')" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Permissions</p>
                                 </Link>
                             </li>
-                            <li class="nav-item">
+                            <li class="nav-item"
+                                v-if="$page.props.adminUser.can.accessUsers"
+                            >
                                 <Link :href="route('admin.users.index')" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Users</p>
                                 </Link>
                             </li>
-                            <li class="nav-item">
+                            <li class="nav-item"
+                                v-if="$page.props.adminUser.can.accessAdmins"
+                            >
                                 <Link :href="route('admin.admins.index')" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Admins</p>
