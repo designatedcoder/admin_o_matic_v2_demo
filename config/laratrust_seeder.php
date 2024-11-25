@@ -14,7 +14,7 @@ return [
     'roles_structure' => [
         'super-admin' => [
             'panel' => 'a',
-            'admins' => 'a,c,u,d',
+            'admins' => 'a,u',
             'roles' => 'a,c,u,d',
             'permissions' => 'a,c,u,d',
             'users' => 'a,u',
@@ -22,7 +22,7 @@ return [
         ],
         'admin' => [
             'panel' => 'a',
-            'admins' => 'a,c,u,d',
+            'admins' => 'a,u',
             'roles' => 'a,c,u,d',
             'permissions' => 'a,c,u,d',
             'users' => 'a,u',
