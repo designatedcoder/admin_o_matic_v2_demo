@@ -1,10 +1,11 @@
 <script setup>
     import { ref, computed } from 'vue'
     import { useForm } from '@inertiajs/vue3'
+    import Pagination from '@/Components/Custom/Pagination.vue'
     import AdminLayout from '@/Layouts/AdminLayout.vue'
 
     const props = defineProps({
-        admins: Array,
+        admins: Object,
         roles: Array,
     });
 
@@ -29,7 +30,7 @@
 
     const openEdit = (item) => {
         $('#modal-lg').modal('show')
-        editedIndex.value = props.admins.indexOf(item);
+        editedIndex.value = props.admins.data.indexOf(item);
         editMode.value = true
         form.id = item.id
         form.name = item.name
@@ -81,7 +82,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr v-for="(item, index) in props.admins" :key="index">
+                                    <tr v-for="(item, index) in props.admins.data" :key="index">
                                         <td>{{ item.id }}</td>
                                         <td>{{ item.name }}</td>
                                         <td>{{ item.email }}</td>
@@ -103,6 +104,7 @@
                             </table>
                         </div>
                         <!-- /.card-body -->
+                        <Pagination :links="props.admins.links" />
                     </div>
                     <!-- /.card -->
                 </div>
