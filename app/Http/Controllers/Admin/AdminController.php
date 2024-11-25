@@ -18,7 +18,7 @@ class AdminController extends Controller
         Gate::allowIf(fn (User $user) => $user->isAbleTo('access-admins'));
 
         return Inertia::render('Admin/Admins/Index', [
-            'admins' => User::where('is_admin', 1)->with('roles:id,name')->get(),
+            'admins' => User::where('is_admin', 1)->with('roles:id,name')->paginate(5),
             'roles' => Role::get(['id', 'name'])
         ])->rootView('admin');
     }

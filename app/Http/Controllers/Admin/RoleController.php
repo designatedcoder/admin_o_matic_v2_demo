@@ -7,6 +7,7 @@ use App\Models\Permission;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
 
@@ -19,7 +20,7 @@ class RoleController extends Controller
         Gate::allowIf(fn (User $user) => $user->isAbleTo('access-roles'));
 
         return Inertia::render('Admin/Roles/Index', [
-            'roles' => Role::with('permissions:id,name')->get(),
+            'roles' => Role::with('permissions:id,name')->paginate(5),
             'permissions' => Permission::get(['id', 'name'])
         ])->rootView('admin');
     }

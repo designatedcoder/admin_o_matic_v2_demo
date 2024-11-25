@@ -18,7 +18,7 @@ class UserController extends Controller
         Gate::allowIf(fn (User $user) => $user->isAbleTo('access-users'));
 
         return Inertia::render('Admin/Users/Index', [
-            'users' => User::where('is_admin', 0)->with('roles:id,name')->latest()->get(),
+            'users' => User::where('is_admin', 0)->with('roles:id,name')->latest()->paginate(5),
             'roles' => Role::get(['id', 'name'])
         ])->rootView('admin');
     }

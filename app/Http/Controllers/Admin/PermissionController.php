@@ -19,7 +19,7 @@ class PermissionController extends Controller
         Gate::allowIf(fn (User $user) => $user->isAbleTo('access-permissions'));
 
         return Inertia::render('Admin/Permissions/Index', [
-            'permissions' => Permission::latest()->get()
+            'permissions' => Permission::latest()->paginate(5)
         ])->rootView('admin');
     }
 
