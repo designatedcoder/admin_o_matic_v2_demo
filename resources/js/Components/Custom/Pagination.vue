@@ -6,7 +6,7 @@
 </script>
 
 <template>
-    <nav v-if="links.length > 4">
+    <nav class="p-2" v-if="links.length > 3">
         <ul class="pagination pagination-sm sm-0 float-right">
             <li class="page-item"
                 :class="[
