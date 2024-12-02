@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
+use Inertia\Inertia;
 use Laravel\Fortify\Contracts\LoginResponse;
 use Laravel\Fortify\Fortify;
 
@@ -30,7 +31,7 @@ class FortifyServiceProvider extends ServiceProvider
                         break;
 
                     case '1':
-                        return redirect()->route('admin.dashboard');
+                        return Inertia::location(route('admin.dashboard'));
                         break;
 
                     default:
