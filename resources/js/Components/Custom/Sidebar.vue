@@ -51,7 +51,10 @@ with font-awesome or any other icon font library -->
                             <li class="nav-item"
                                 v-if="$page.props.adminUser.can.accessRoles"
                             >
-                                <Link :href="route('admin.roles.index')" class="nav-link">
+                                <Link :href="route('admin.roles.index')"
+                                    class="nav-link"
+                                    :class="{ 'active' : route().current('admin.roles.index') }"
+                                >
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Roles</p>
                                 </Link>
@@ -59,7 +62,10 @@ with font-awesome or any other icon font library -->
                             <li class="nav-item"
                                 v-if="$page.props.adminUser.can.accessPermissions"
                             >
-                                <Link :href="route('admin.permissions.index')" class="nav-link">
+                                <Link :href="route('admin.permissions.index')"
+                                    class="nav-link"
+                                    :class="{ 'active' : route().current('admin.permissions.index') }"
+                                >
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Permissions</p>
                                 </Link>
@@ -67,7 +73,10 @@ with font-awesome or any other icon font library -->
                             <li class="nav-item"
                                 v-if="$page.props.adminUser.can.accessUsers"
                             >
-                                <Link :href="route('admin.users.index')" class="nav-link">
+                                <Link :href="route('admin.users.index')"
+                                    class="nav-link"
+                                    :class="{ 'active' : route().current('admin.users.index') }"
+                                >
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Users</p>
                                 </Link>
@@ -75,7 +84,10 @@ with font-awesome or any other icon font library -->
                             <li class="nav-item"
                                 v-if="$page.props.adminUser.can.accessAdmins"
                             >
-                                <Link :href="route('admin.admins.index')" class="nav-link">
+                                <Link :href="route('admin.admins.index')"
+                                    class="nav-link"
+                                    :class="{ 'active' : route().current('admin.admins.index') }"
+                                >
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Admins</p>
                                 </Link>
