@@ -1,4 +1,5 @@
 <script setup>
+    import { onMounted } from 'vue'
     import { Head } from '@inertiajs/vue3'
     import Navigation from '@/Components/Custom/Navigation.vue'
     import Footer from '@/Components/Custom/Footer.vue'
@@ -7,6 +8,19 @@
     defineProps({
         title: String,
     });
+
+    onMounted(() => {
+        let SELECTOR_LOADER = '.preloader'
+        setTimeout(() => {
+            let $loader = $(SELECTOR_LOADER)
+            if ($loader) {
+                $loader.css('height', 0)
+                setTimeout(() => {
+                    $loader.children().hide()
+                }, 200);
+            }
+        }, 2000);
+    })
 </script>
 
 <template>
@@ -15,9 +29,9 @@
         <Head :title="title" />
 
         <!-- Preloader -->
-        <!-- <div class="preloader flex-column justify-content-center align-items-center"> -->
-        <!--   <img class="animation__wobble" :src="'/storage/defaults/images/AdminLTELogo.png'" alt="AdminLTELogo" height="60" width="60"> -->
-        <!-- </div> -->
+        <div class="preloader flex-column justify-content-center align-items-center">
+          <img class="animation__wobble" :src="'/storage/defaults/images/AdminLTELogo.png'" alt="AdminLTELogo" height="60" width="60">
+        </div>
 
         <!-- Navbar -->
         <Navigation />
